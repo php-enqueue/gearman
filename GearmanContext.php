@@ -85,9 +85,13 @@ class GearmanContext implements Context
     {
         InvalidDestinationException::assertDestinationInstanceOf($destination, GearmanDestination::class);
 
-        $this->consumers[] = $consumer = new GearmanConsumer($this, $destination);
+        $queueName = $destination->getName();
+        if (empty($this->consumers[$queueName]))
+        {
+            $this->consumers[$queueName] = new GearmanConsumer($this, $destination);
+        }
 
-        return $consumer;
+        return $consumer[$queueName];
     }
 
     public function close(): void
