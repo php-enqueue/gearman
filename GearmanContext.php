@@ -91,7 +91,7 @@ class GearmanContext implements Context
             $this->consumers[$queueName] = new GearmanConsumer($this, $destination);
         }
 
-        return $consumer[$queueName];
+        return $this->consumers[$queueName];
     }
 
     public function close(): void
